@@ -1,11 +1,11 @@
-import Button from '~/components/Button'
+import Button from "~/components/Button";
 
 const Dashboard = () => {
   return (
     <div>
-        <Button />
+      <Button />
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;
