@@ -1,11 +1,20 @@
-import { Link, Outlet } from '@remix-run/react'
+import { Outlet } from '@remix-run/react'
+
+import Navbar from '~/components/Navbar'
+import Sidebar from '~/components/Sidebar'
 
 const DashboardLayout = () => {
   return (
-    <div>
-      <h1>DashboardLayout</h1>
-      <Link to="/dashboard/admin">go to admin</Link>
-      <Outlet />
+    <div className="flex w-full">
+      <div className="min-h-screen">
+        <Sidebar />
+      </div>
+      <div className="h-full w-full flex flex-col gap-4 p-5">
+        <Navbar />
+        <div className="flex-1">
+          <Outlet />
+        </div>
+      </div>
     </div>
   )
 }

@@ -40,6 +40,7 @@ module.exports = {
         'plugin:jsx-a11y/recommended',
       ],
       rules: {
+        "react/prop-types": "off",
         'simple-import-sort/imports': [
           'error',
           {
