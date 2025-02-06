@@ -42,21 +42,21 @@ model User {
   updated_at DateTime @updatedAt
 
   // Foreign Keys
-  role_id Int
+  role_id    Int
   company_id Int?
 
   // Relationships
-  role Role @relation(fields: [role_id], references: [id])
-  company Company? @relation(fields: [company_id],references: [id])
-  profile Profile? 
+  role    Role     @relation(fields: [role_id], references: [id])
+  company Company? @relation(fields: [company_id], references: [id])
+  profile Profile?
 
   @@map("users")
 }
 
 // Profiles Table
 model Profile {
-  id Int @id @default(autoincrement())
-  user_id Int  @unique
+  id      Int @id @default(autoincrement())
+  user_id Int @unique
 
   user User @relation(references: [id], fields: [user_id])
 
@@ -81,42 +81,30 @@ model Role {
   @@map("roles")
 }
 
-// Permissions Table
-model Permission {
-  id          Int      @id @default(autoincrement())
-  name        String   @unique
-  description String?
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-
-  // Relationships
-  roles RolePermission[]
-
-  @@map("permissions")
-}
-
 // Role-Permissions Join Table (Many-to-Many)
 model RolePermission {
-  role_id       Int
-  permission_id Int
+  role_id Int
+  menu_id Int
 
   // Relationships
-  role       Role       @relation(fields: [role_id], references: [id])
-  permission Permission @relation(fields: [permission_id], references: [id])
+  role Role @relation(fields: [role_id], references: [id])
+  menu Menu @relation(fields: [menu_id], references: [id])
 
-  @@id([role_id, permission_id])
+  @@id([role_id, menu_id])
   @@map("role_permissions")
 }
 
 model Menu {
-  id        Int    @id @default(autoincrement())
-  type      String //parent, children, group
+  id        Int     @id @default(autoincrement())
   label     String // Menu Name
-  path      String // Menu route
+  path      String? // Menu route
   parent_id Int?
+  icon      String?
 
   parent   Menu?  @relation("MultiMenu", references: [id], fields: [parent_id])
   children Menu[] @relation("MultiMenu")
+
+  permissions RolePermission[]
 
   @@map("menus")
 }
