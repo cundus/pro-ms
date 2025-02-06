@@ -27,7 +27,7 @@ import {
   FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
-import { loginService } from '~/server/services/login.server'
+import { loginService } from '~/server/services/auth.server'
 import { getUserSession } from '~/server/sessions/session.server'
 
 const FormSchema = z.object({
@@ -45,11 +45,12 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userSession = await getUserSession(request)
-  console.log(userSession)
 
   if (userSession) {
     return redirect('/dashboard')
   }
+
+  return null
 }
 
 export const meta: MetaFunction = () => {

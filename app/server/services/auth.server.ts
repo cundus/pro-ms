@@ -25,7 +25,7 @@ export const loginService = async (request: Request) => {
 
   const sessionHeader = await storeUserSession({
     user_id: existUser.id,
-    role: existUser.role_id,
+    role_id: existUser.role_id,
     company_id: existUser.company_id,
   })
 
