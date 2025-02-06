@@ -1,21 +1,25 @@
 import { redirect } from '@remix-run/node'
 
 import { getUserDetails } from '~/server/services/user.server'
-import { getUserSession } from '~/server/sessions/session.server'
+import { getUserSession, logout } from '~/server/sessions/session.server'
 
 export const guard = async (request: Request) => {
-  const sessionHeader = await getUserSession(request)
-  const currentUrl = new URL(request.url).pathname
+  try {
+    const sessionHeader = await getUserSession(request)
+    // const currentUrl = new URL(request.url).pathname
 
-  console.log({ currentUrl, sessionHeader })
+    if (!sessionHeader) {
+      throw redirect('/login', {})
+    }
 
-  if (!sessionHeader) {
-    throw redirect('/login', {})
+    const userDetail = await getUserDetails({ id: sessionHeader.user.id })
+
+    if (!userDetail) {
+      throw await logout({ request })
+    }
+
+    return sessionHeader
+  } catch (error) {
+    throw await logout({ request })
   }
-
-  const userDetail = await getUserDetails({ id: sessionHeader.user_id })
-
-  console.log({ userDetail })
-
-  return userDetail
 }

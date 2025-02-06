@@ -1,10 +1,6 @@
 import { createCookieSessionStorage, redirect } from '@remix-run/node'
 
-export interface UserSessionDTO {
-  user_id: number
-  role_id: number
-  company_id: number | null
-}
+import { ISessionDTO } from '../types/auth'
 
 export const { commitSession, destroySession, getSession } =
   createCookieSessionStorage({
@@ -17,7 +13,7 @@ export const { commitSession, destroySession, getSession } =
     },
   })
 
-export const storeUserSession = async (data: UserSessionDTO) => {
+export const storeUserSession = async (data: ISessionDTO) => {
   const session = await getSession()
   session.set('user', data)
   return commitSession(session)
@@ -25,7 +21,7 @@ export const storeUserSession = async (data: UserSessionDTO) => {
 
 export const getUserSession = async (
   request: Request
-): Promise<UserSessionDTO | null> => {
+): Promise<ISessionDTO | null> => {
   const session = await getSession(request.headers.get('Cookie'))
   return session.get('user')
 }

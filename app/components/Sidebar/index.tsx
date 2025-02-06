@@ -1,7 +1,8 @@
-import { useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { Icon } from '@iconify-icon/react'
 import { Link, useLocation } from '@remix-run/react'
-import { Calendar, Home, Inbox, Search, Settings } from 'lucide-react'
+
+import navRenderer from './nav-renderer'
 
 import {
   Sidebar as ShadSidebar,
@@ -9,46 +10,21 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSkeleton,
   SidebarSeparator,
   useSidebar,
 } from '~/components/ui/sidebar'
-
-const items = [
-  {
-    title: 'Home',
-    url: '#',
-    icon: Home,
-  },
-  {
-    title: 'Inbox',
-    url: '#',
-    icon: Inbox,
-  },
-  {
-    title: 'Calendar',
-    url: '#',
-    icon: Calendar,
-  },
-  {
-    title: 'Search',
-    url: '#',
-    icon: Search,
-  },
-  {
-    title: 'Settings',
-    url: '#',
-    icon: Settings,
-  },
-]
+import { IMenu } from '~/server/types/auth'
 
 const Sidebar = () => {
   const { open } = useSidebar()
   const location = useLocation()
+  const [menus, setMenus] = React.useState<IMenu[]>([])
+  const [loading, setLoading] = React.useState(false)
 
   // make memoized function
   const isActive = useMemo(() => {
@@ -56,6 +32,22 @@ const Sidebar = () => {
       return location.pathname === url
     }
   }, [location])
+
+  React.useEffect(() => {
+    const fetchMenus = async () => {
+      try {
+        setLoading(true)
+        const response = await fetch('/api/menus')
+        const data = await response.json()
+        setMenus(data.menus)
+        setLoading(false)
+      } catch (error) {
+        console.error('Error fetching menus:', error)
+      }
+    }
+
+    fetchMenus()
+  }, [])
 
   return (
     <ShadSidebar collapsible="icon">
@@ -69,43 +61,40 @@ const Sidebar = () => {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent>
-        <SidebarSeparator />
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={isActive('/dashboard')}>
-                  <Link to={'/dashboard'}>
-                    <Icon
-                      icon="si:dashboard-line"
-                      className="text-[16px] text-center"
-                    />
-                    <span className="">Dashboard</span>
-                  </Link>
-                </SidebarMenuButton>
+      {loading ? (
+        <SidebarContent>
+          <SidebarMenu>
+            {Array.from({ length: 5 }).map((_, index) => (
+              <SidebarMenuItem key={index}>
+                <SidebarMenuSkeleton showIcon />
               </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link to={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
+            ))}
+          </SidebarMenu>
+        </SidebarContent>
+      ) : (
+        <SidebarContent>
+          <SidebarSeparator />
+          <SidebarGroup>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild isActive={isActive('/dashboard')}>
+                    <Link to={'/dashboard'}>
+                      <Icon
+                        icon="si:dashboard-line"
+                        className="text-[16px] text-center"
+                      />
+                      <span className="">Dashboard</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+          {menus.length > 0 && navRenderer({ menus })}
+        </SidebarContent>
+      )}
+
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>

@@ -4,6 +4,10 @@ import bcrypt from 'bcryptjs'
 
 import { findUser } from '../repositories/user.server'
 import { storeUserSession } from '../sessions/session.server'
+import { ISessionDTO } from '../types/auth'
+
+import { getMenuAndPermissions } from './menu.server'
+import { getUserDetails } from './user.server'
 
 export const loginService = async (request: Request) => {
   const formData = await request.formData()
@@ -23,11 +27,21 @@ export const loginService = async (request: Request) => {
     return Response.json({ message: 'User or password is incorrect!' })
   }
 
+  const detailUser = await getUserDetails({ id: existUser.id })
+
+  if (!detailUser) {
+    return Response.json({ message: 'User or password is incorrect!' })
+  }
+
+  const menus = await getMenuAndPermissions(
+    detailUser.role_id,
+    detailUser.role.is_global
+  )
+
   const sessionHeader = await storeUserSession({
-    user_id: existUser.id,
-    role_id: existUser.role_id,
-    company_id: existUser.company_id,
-  })
+    user: detailUser,
+    menus,
+  } as unknown as ISessionDTO)
 
   return redirect('/dashboard', {
     headers: {
