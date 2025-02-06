@@ -1,15 +1,19 @@
+import { Icon } from '@iconify-icon/react'
 import { Link } from '@remix-run/react'
 import { Calendar, Home, Inbox, Search, Settings } from 'lucide-react'
 
 import {
   Sidebar as ShadSidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from '~/components/ui/sidebar'
 
 const items = [
@@ -41,9 +45,21 @@ const items = [
 ]
 
 const Sidebar = () => {
+  const { open } = useSidebar()
+
   return (
     <ShadSidebar collapsible="icon">
       <SidebarContent>
+        <SidebarHeader>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <div className="flex items-center justify-center gap-2">
+                <Icon icon="mdi:home" className="text-2xl" />
+                {open && <span className="text-xl">AMS</span>}
+              </div>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarHeader>
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
@@ -62,6 +78,15 @@ const Sidebar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <Link to={'/login'}>login</Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </ShadSidebar>
   )
 }

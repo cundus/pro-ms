@@ -1,14 +1,14 @@
 import type { LinksFunction } from '@remix-run/node'
 import {
-  isRouteErrorResponse,
-  Link,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
-  useRouteError,
 } from '@remix-run/react'
+
+import { GeneralErrorBoundary } from './components/error-boundary'
+import { Toaster } from './components/ui/toaster'
 
 import './tailwind.css'
 
@@ -36,6 +36,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body suppressHydrationWarning>
         {children}
+        <Toaster />
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -47,36 +48,4 @@ export default function App() {
   return <Outlet />
 }
 
-export function ErrorBoundary() {
-  const error = useRouteError()
-  let heading = 'Unexpected Error'
-  let message =
-    'We are very sorry. An unexpected error occurred. Please try again or contact us if the problem persists.'
-  if (isRouteErrorResponse(error)) {
-    switch (error.status) {
-      case 401:
-        heading = '401 Unauthorized'
-        message =
-          'Oops! Looks like you tried to visit a page that you do not have access to.'
-        break
-      case 404:
-        heading = '404 Not Found'
-        message =
-          'Oops! Looks like you tried to visit a page that does not exist.'
-        break
-    }
-  }
-  const errorMessage = error instanceof Error ? error.message : null
-  return (
-    <section className="m-5 lg:m-20 flex flex-col gap-5">
-      <h1>{heading}</h1>
-      <p>{message}</p>
-      {errorMessage && (
-        <div className="border-4 border-red-500 p-10">
-          <p>Error message: {errorMessage}</p>
-        </div>
-      )}
-      <Link to="/">Back to homepage</Link>
-    </section>
-  )
-}
+export const ErrorBoundary = GeneralErrorBoundary
