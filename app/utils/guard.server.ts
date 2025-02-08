@@ -1,7 +1,7 @@
 import { redirect } from '@remix-run/node'
 
-import { getUserDetails } from '~/server/services/user.server'
-import { getUserSession, logout } from '~/server/sessions/session.server'
+import { getUserDetails } from '~/services/user.server'
+import { getUserSession, logout } from '~/sessions/session.server'
 
 export const guard = async (request: Request) => {
   try {

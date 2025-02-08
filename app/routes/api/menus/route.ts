@@ -1,6 +1,6 @@
 import { LoaderFunction } from '@remix-run/node'
 
-import { IMenu } from '~/server/types/auth'
+import { IMenu } from '~/types/menu'
 import { guard } from '~/utils/guard.server'
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -18,7 +18,6 @@ export const loader: LoaderFunction = async ({ request }) => {
       children: [],
     })
   }
-  console.log('menus', JSON.stringify(menus, null, 2))
 
   return Response.json({ menus })
 }

@@ -16,21 +16,44 @@ model Company {
   description String?
   logo        String?
 
-  address     String
-  city        String
-  province    String
+  address        String
+  subdistrict    String
+  subdistrict_id Int
+  district       String
+  district_id    Int
+  regency        String
+  regency_id     Int
+  province       String
+  province_id    Int
+
   postal_code String
-  country     String
-  phone       String?
-  email       String?
-  website     String?
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
+
+  phone      String?
+  email      String?
+  website    String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  is_active  Boolean  @default(true)
 
   // Relationships
-  user User[]
+  user          User[]
+  configuration CompanyConfiguration?
 
   @@map("companies")
+}
+
+model CompanyConfiguration {
+  id         Int      @id @default(autoincrement())
+  company_id Int      @unique
+  key        String
+  value      String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  // Relationships
+  company Company @relation(fields: [company_id], references: [id])
+
+  @@map("company_configurations")
 }
 
 // Users Table
@@ -40,6 +63,7 @@ model User {
   password   String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  is_active  Boolean  @default(true)
 
   // Foreign Keys
   role_id    Int
@@ -70,6 +94,7 @@ model Role {
   is_global  Boolean  @default(false) // True for Super Admin
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  is_active  Boolean  @default(true)
 
   // Foreign Key (optional, for company-specific roles)
   company_id Int?
@@ -105,6 +130,7 @@ model Menu {
   parent_id Int?
   icon      String?
   order     Int     @default(autoincrement())
+  is_active Boolean @default(true)
 
   parent   Menu?  @relation("MultiMenu", references: [id], fields: [parent_id])
   children Menu[] @relation("MultiMenu")

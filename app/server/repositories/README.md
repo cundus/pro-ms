@@ -1,1 +1,0 @@
-Repositories are responsible to handle data access

@@ -27,8 +27,8 @@ import {
   FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
-import { loginService } from '~/server/services/auth.server'
-import { getUserSession } from '~/server/sessions/session.server'
+import { loginService } from '~/services/auth.server'
+import { getUserSession } from '~/sessions/session.server'
 
 const FormSchema = z.object({
   username: z.string().min(2, {

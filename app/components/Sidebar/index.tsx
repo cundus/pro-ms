@@ -18,7 +18,7 @@ import {
   SidebarSeparator,
   useSidebar,
 } from '~/components/ui/sidebar'
-import { IMenu } from '~/server/types/auth'
+import { IMenu } from '~/types/auth'
 
 const Sidebar = () => {
   const { open } = useSidebar()

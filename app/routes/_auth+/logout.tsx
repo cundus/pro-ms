@@ -1,6 +1,6 @@
 import { ActionFunction, LoaderFunction } from '@remix-run/node'
 
-import { logout } from '~/server/sessions/session.server'
+import { logout } from '~/sessions/session.server'
 
 export const loader: LoaderFunction = async ({ request }) => {
   return logout({ request })
