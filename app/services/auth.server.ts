@@ -2,12 +2,11 @@ import { User } from '@prisma/client'
 import { redirect } from '@remix-run/node'
 import bcrypt from 'bcryptjs'
 
-import { findUser } from '../repositories/user.server'
+import { getMenuAndPermissions } from '../repositories/menu.server'
+import { findUser, getUserDetails } from '../repositories/user.server'
 import { storeUserSession } from '../sessions/session.server'
-import { ISessionDTO } from '../types/auth'
 
-import { getMenuAndPermissions } from './menu.server'
-import { getUserDetails } from './user.server'
+import { ISessionDTO } from '~/types/session'
 
 export const loginService = async (request: Request) => {
   const formData = await request.formData()
