@@ -1,9 +1,9 @@
 import { LoaderFunction } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 
-import Container from '~/components/Container'
 import { columns } from '~/components/data-table/columns/company-columns'
 import CompanyDataTable from '~/components/data-table/tables/company-table'
+import Heading from '~/components/heading'
 
 export const loader: LoaderFunction = async () => {
   return Response.json({
@@ -15,11 +15,11 @@ function Index() {
   const loaderData = useLoaderData<typeof loader>()
 
   return (
-    <Container>
-      <h1 className="text-2xl font-bold">Company Management</h1>
+    <>
+      <Heading title="Company Management" />
       <div className="flex items-center justify-between my-4"></div>
       <CompanyDataTable columns={columns} data={loaderData.companies} />
-    </Container>
+    </>
   )
 }
 
