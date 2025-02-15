@@ -1,0 +1,30 @@
+// Users Table
+model User {
+    id         Int      @id @default(autoincrement())
+    username   String   @unique
+    password   String
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+    is_active  Boolean  @default(true)
+
+    // Foreign Keys
+    role_id    Int
+    company_id Int?
+
+    // Relationships
+    role    Role     @relation(fields: [role_id], references: [id])
+    company Company? @relation(fields: [company_id], references: [id])
+    profile Profile?
+
+    @@map("users")
+}
+
+// Profiles Table
+model Profile {
+    id      Int @id @default(autoincrement())
+    user_id Int @unique
+
+    user User @relation(references: [id], fields: [user_id])
+
+    @@map("profiles")
+}

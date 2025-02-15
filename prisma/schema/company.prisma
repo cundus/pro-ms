@@ -1,0 +1,70 @@
+// Companies Table
+model Company {
+  id             Int      @id @default(autoincrement())
+  name           String
+  description    String?
+  logo           String?
+  address        String
+  subdistrict    String
+  subdistrict_id Int
+  district       String
+  district_id    Int
+  regency        String
+  regency_id     Int
+  province       String
+  province_id    Int
+  postal_code    String
+  phone          String?
+  email          String?
+  website        String?
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+  is_active      Boolean  @default(true)
+
+  // Relationships
+  user                User[]
+  configuration       CompanyConfiguration?
+  CompanySubscription CompanySubscription[]
+
+  @@map("companies")
+}
+
+model CompanyConfiguration {
+  id         Int      @id @default(autoincrement())
+  company_id Int      @unique
+  key        String
+  value      String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  // Relationships
+  company Company @relation(fields: [company_id], references: [id])
+
+  @@map("company_configurations")
+}
+
+model CompanySubscription {
+  id             Int                @id @default(autoincrement())
+  company_id     Int
+  plan_name      String
+  price          Decimal            @default(0.00)
+  currency       String             @default("IDR")
+  status         SubscriptionStatus @default(TRIAL)
+  start_date     DateTime
+  end_date       DateTime
+  payment_method String?
+  auto_renew     Boolean            @default(false)
+  created_at     DateTime           @default(now())
+  updated_at     DateTime           @updatedAt
+
+  company Company @relation(fields: [company_id], references: [id], onDelete: Cascade)
+
+  @@map("company_subscriptions")
+}
+
+enum SubscriptionStatus {
+  TRIAL
+  ACTIVE
+  EXPIRED
+  CANCELED
+}

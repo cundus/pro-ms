@@ -1,0 +1,17 @@
+model Menu {
+  id        Int     @id @default(autoincrement())
+  label     String // Menu Name
+  path      String? // Menu route
+  parent_id Int?
+  icon      String?
+  order     Int     @default(autoincrement())
+  is_active Boolean @default(true)
+
+  parent   Menu?  @relation("MultiMenu", references: [id], fields: [parent_id])
+  children Menu[] @relation("MultiMenu")
+
+  permissions RolePermission[]
+
+  @@unique([parent_id, order])
+  @@map("menus")
+}
