@@ -10,7 +10,8 @@
     "start": "remix-serve ./build/server/index.js",
     "typecheck": "tsc",
     "prepare": "husky install",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "postinstall": "npx prisma generate"
   },
   "lint-staged": {
     "app/**/*.{js,jsx,ts,tsx}": [
