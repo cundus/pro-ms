@@ -22,7 +22,13 @@ import {
 
 import { IMenu } from '~/types/menu'
 
-const navRenderer = ({ menus }: { menus: IMenu[] }) => {
+const navRenderer = ({
+  menus,
+  isActive,
+}: {
+  menus: IMenu[]
+  isActive: (url: string) => boolean
+}) => {
   return (
     <>
       {menus.map((menu) => {
@@ -32,7 +38,8 @@ const navRenderer = ({ menus }: { menus: IMenu[] }) => {
               <SidebarGroup key={menu.id}>
                 <SidebarGroupLabel>{menu.label}</SidebarGroupLabel>
                 <SidebarGroupContent>
-                  {menu.children && navRenderer({ menus: menu.children })}
+                  {menu.children &&
+                    navRenderer({ menus: menu.children, isActive })}
                 </SidebarGroupContent>
               </SidebarGroup>
               <SidebarSeparator />
@@ -54,7 +61,8 @@ const navRenderer = ({ menus }: { menus: IMenu[] }) => {
                   </CollapsibleTrigger>
                   <CollapsibleContent>
                     <SidebarMenuSub>
-                      {menu.children && navRenderer({ menus: menu.children })}
+                      {menu.children &&
+                        navRenderer({ menus: menu.children, isActive })}
                     </SidebarMenuSub>
                   </CollapsibleContent>
                 </SidebarMenuItem>
@@ -69,7 +77,10 @@ const navRenderer = ({ menus }: { menus: IMenu[] }) => {
               <SidebarGroupContent>
                 <SidebarMenu>
                   <SidebarMenuItem key={menu.id}>
-                    <SidebarMenuButton asChild>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={isActive('/dashboard/' + menu.path)}
+                    >
                       <Link to={menu.path || ''}>
                         <Icon icon={menu.icon || ''} className="text-[16px]" />
                         <span>{menu.label}</span>
@@ -85,7 +96,10 @@ const navRenderer = ({ menus }: { menus: IMenu[] }) => {
         if (menu.parent_id && menu.path && !menu.children) {
           return (
             <SidebarMenuSubItem key={menu.id}>
-              <SidebarMenuButton asChild>
+              <SidebarMenuButton
+                asChild
+                isActive={isActive('/dashboard/' + menu.path)}
+              >
                 <Link to={menu.path || ''}>
                   <Icon icon={menu.icon || ''} className="text-[16px]" />
                   <span>{menu.label}</span>
@@ -98,7 +112,10 @@ const navRenderer = ({ menus }: { menus: IMenu[] }) => {
         return (
           <SidebarMenu key={menu.id}>
             <SidebarMenuItem key={menu.id}>
-              <SidebarMenuButton asChild>
+              <SidebarMenuButton
+                asChild
+                isActive={isActive('/dashboard/' + menu.path || '')}
+              >
                 <Link to={menu.path || ''}>
                   <Icon icon={menu.icon || ''} className="text-[16px]" />
                   <span>{menu.label}</span>

@@ -91,7 +91,7 @@ const Sidebar = () => {
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
-          {menus.length > 0 && navRenderer({ menus })}
+          {menus.length > 0 && navRenderer({ menus, isActive })}
         </SidebarContent>
       )}
 
