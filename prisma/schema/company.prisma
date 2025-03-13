@@ -25,6 +25,7 @@ model Company {
   user                User[]
   configuration       CompanyConfiguration?
   CompanySubscription CompanySubscription[]
+  roles               Role[]
 
   @@map("companies")
 }

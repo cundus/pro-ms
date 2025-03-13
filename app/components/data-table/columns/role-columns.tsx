@@ -1,11 +1,12 @@
-import { Company, Role } from '@prisma/client'
 import { ColumnDef } from '@tanstack/react-table'
 
 import { ActionComponent } from '../components/action'
 import { DataTableColumnHeader } from '../components/header'
 import { HeaderSelector, RowSelector } from '../components/row-selection'
 
-export const columns: ColumnDef<Role & { company: Company }>[] = [
+import { RoleWithCompany } from '~/types/role'
+
+export const columns: ColumnDef<RoleWithCompany>[] = [
   {
     id: 'Select',
     header: ({ table }) => <HeaderSelector table={table} />,
@@ -28,10 +29,10 @@ export const columns: ColumnDef<Role & { company: Company }>[] = [
       return (
         <div
           style={{
-            textAlign: 'center',
+            textAlign: 'left',
           }}
         >
-          {row.original.company.name}
+          {row.original.company?.name || 'Global'}
         </div>
       )
     },
