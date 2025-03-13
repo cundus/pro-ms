@@ -15,7 +15,11 @@ export const meta: MetaFunction = () => {
 const CompanyLayout = () => {
   const outletContext = useOutletContext<IOutletContext>()
 
-  if (!outletContext?.userSession.role?.is_global) {
+  if (!outletContext?.userSession) {
+    return <Navigate to="/logout" />
+  }
+
+  if (!outletContext.userSession.role?.is_global) {
     return <Navigate to="/dashboard" />
   }
   return (
