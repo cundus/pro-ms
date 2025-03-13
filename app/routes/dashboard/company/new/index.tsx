@@ -1,25 +1,24 @@
-import { useForm } from 'react-hook-form'
+// import { useForm } from 'react-hook-form'
 import { Form } from '@remix-run/react'
-import { z } from 'zod'
 
-import DetailForm from '../_components/forms/detail-form'
-import { companySchema } from '../_components/schema'
-
+// import { z } from 'zod'
+// import DetailForm from '../_components/forms/detail-form'
+// import { companySchema } from '../_components/schema'
 import Heading from '~/components/heading'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs'
 
 const NewCompany = () => {
-  const form = useForm<z.infer<typeof companySchema>>({
-    defaultValues: {
-      name: '',
-      address: '',
-      city: '',
-      state: '',
-      zip: '',
-      phone: '',
-      email: '',
-    },
-  })
+  // const form = useForm<z.infer<typeof companySchema>>({
+  //   defaultValues: {
+  //     name: '',
+  //     address: '',
+  //     city: '',
+  //     state: '',
+  //     zip: '',
+  //     phone: '',
+  //     email: '',
+  //   },
+  // })
 
   return (
     <>
@@ -32,7 +31,7 @@ const NewCompany = () => {
             <TabsTrigger value="config">Configs</TabsTrigger>
           </TabsList>
           <TabsContent value="detail">
-            <DetailForm form={form} />
+            {/* <DetailForm form={form} /> */}
           </TabsContent>
           <TabsContent value="config">config</TabsContent>
         </Tabs>
