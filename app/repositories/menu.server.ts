@@ -44,3 +44,7 @@ export const getMenuAndPermissions = async (
 
   return menus
 }
+
+export const getAllMenus = async () => {
+  return await prisma.menu.findMany({ orderBy: { id: 'desc' } })
+}
