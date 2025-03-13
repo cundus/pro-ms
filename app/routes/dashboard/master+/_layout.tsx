@@ -15,7 +15,7 @@ export const meta: MetaFunction = () => {
 const MasterLayout = () => {
   const outletContext = useOutletContext<IOutletContext>()
 
-  if (!outletContext.userSession.role?.is_global) {
+  if (!outletContext?.userSession.role?.is_global) {
     return <Navigate to="/dashboard" />
   }
   return (
