@@ -4,14 +4,16 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "npx prisma migrate deploy && remix vite:build",
+    "prebuild": "npx prisma generate",
+    "build": "remix vite:build",
     "dev": "remix vite:dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "remix-serve ./build/server/index.js",
     "typecheck": "tsc",
     "prepare": "husky install",
     "format": "prettier --write .",
-    "postinstall": "npx prisma generate"
+    "postinstall": "npx prisma generate",
+    "db:migrate": "npx prisma migrate deploy"
   },
   "lint-staged": {
     "app/**/*.{js,jsx,ts,tsx}": [
