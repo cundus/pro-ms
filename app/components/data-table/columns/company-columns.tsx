@@ -20,7 +20,7 @@ export const columns: ColumnDef<Company>[] = [
     ),
   },
   {
-    accessorKey: 'city',
+    accessorKey: 'regency',
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
@@ -35,7 +35,7 @@ export const columns: ColumnDef<Company>[] = [
             textAlign: 'center',
           }}
         >
-          {row.original.city}
+          {row.original.regency}
         </div>
       )
     },

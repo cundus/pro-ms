@@ -1,6 +1,6 @@
 import { createCookieSessionStorage, redirect } from '@remix-run/node'
 
-import { ISessionDTO } from '../types/auth'
+import { ISessionDTO } from '~/types/session'
 
 export const { commitSession, destroySession, getSession } =
   createCookieSessionStorage({
