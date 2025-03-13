@@ -20,7 +20,7 @@ import {
   SidebarSeparator,
 } from '../ui/sidebar'
 
-import { IMenu } from '~/types/auth'
+import { IMenu } from '~/types/menu'
 
 const navRenderer = ({ menus }: { menus: IMenu[] }) => {
   return (
