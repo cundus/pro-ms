@@ -11,3 +11,13 @@ export interface IMenu
   is_active?: boolean
   children?: IMenu[] | null
 }
+
+export type MenuBody = {
+  id?: number
+  label: string
+  icon?: string
+  path?: string
+  parent_id?: number
+  order?: number
+  is_active?: boolean
+}
