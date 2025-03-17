@@ -3,7 +3,7 @@ import { redirect } from '@remix-run/node'
 import bcrypt from 'bcryptjs'
 
 import { getMenuAndPermissions } from '../repositories/menu.server'
-import { findUser, getUserDetails } from '../repositories/user.server'
+import { findUser } from '../repositories/user.server'
 import { storeUserSession } from '../sessions/session.server'
 
 import { ISessionDTO } from '~/types/session'
@@ -26,19 +26,19 @@ export const loginService = async (request: Request) => {
     return Response.json({ message: 'User or password is incorrect!' })
   }
 
-  const detailUser = await getUserDetails({ id: existUser.id })
-
-  if (!detailUser) {
-    return Response.json({ message: 'User or password is incorrect!' })
-  }
+  // const detailUser = await getUserDetails({ id: existUser.id })
+  existUser.password = ''
+  // if (!detailUser) {
+  //   return Response.json({ message: 'User or password is incorrect!' })
+  // }
 
   const menus = await getMenuAndPermissions(
-    detailUser.role_id,
-    detailUser.role.is_global
+    existUser.role_id,
+    existUser.role.is_global
   )
 
   const sessionHeader = await storeUserSession({
-    user: detailUser,
+    user: existUser,
     menus,
   } as unknown as ISessionDTO)
 
