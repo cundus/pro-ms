@@ -24,7 +24,7 @@ interface TableProps<TData, TValue> {
   exports?: ExportProps
 }
 
-function Table<Tdata, TValue>({
+function CommonTable<Tdata, TValue>({
   columns,
   data,
   searchBy,
@@ -79,4 +79,4 @@ function Table<Tdata, TValue>({
   )
 }
 
-export default Table
+export default CommonTable
