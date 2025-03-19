@@ -7,7 +7,6 @@ import { useLoaderData } from '@remix-run/react'
 
 import MenuPage from '../_components/page'
 
-import Back from '~/components/data-table/components/back-button'
 import Heading from '~/components/heading'
 import { getAllMenus } from '~/repositories/menu.server'
 import { newMenuService } from '~/services/menu.server'
@@ -37,8 +36,7 @@ const Index = () => {
   return (
     <>
       <div className="flex justify-between">
-        <Heading title="New Menu" />
-        <Back />
+        <Heading title="New Menu" back />
       </div>
       <MenuPage page="new" menus={menus} />
     </>

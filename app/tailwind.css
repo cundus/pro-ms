@@ -4,7 +4,7 @@
 
 html,
 body {
-  @apply bg-white dark:bg-black;
+  /* @apply bg-white dark:bg-black; */
 
   /* @media (prefers-color-scheme: dark) {
     color-scheme: dark;
@@ -17,40 +17,65 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 215 20% 29%; /* Charcoal #3C4858 */
-    --card: 0 0% 100%;
-    --card-foreground: 215 20% 29%; /* Charcoal #3C4858 */
+    --radius: 0.625rem;
+  
+    /* Background & Foreground */
+    --background: 0 0% 98%; /* Soft White */
+    --foreground: 240 10% 20%; /* Dark Grayish Blue for good contrast */
+  
+    /* Card */
+    --card: 0 0% 100%; /* Pure White */
+    --card-foreground: 240 10% 20%;
+  
+    /* Popover */
     --popover: 0 0% 100%;
-    --popover-foreground: 215 20% 29%; /* Charcoal #3C4858 */
-    --primary: 196 49% 35%; /* Deep Teal Blue #2D6D84 */
-    --primary-foreground: 0 0% 98%;
-    --secondary: 215 20% 29%; /* Charcoal #3C4858 */
-    --secondary-foreground: 0 0% 98%;
-    --muted: 120 15% 62%; /* Lighter Sage #B8D0BA */
-    --muted-foreground: 215 20% 29%; /* Charcoal #3C4858 */
-    --accent: 43 50% 81%; /* Warm Sand #E5D9B6 */
-    --accent-foreground: 215 20% 29%; /* Charcoal #3C4858 */
-    --destructive: 7 65% 67%; /* Muted Coral #E57F6E */
-    --destructive-foreground: 0 0% 98%;
-    --border: 196 20% 80%; /* Light Teal #C5D8DE */
-    --input: 196 20% 80%; /* Light Teal #C5D8DE */
-    --ring: 196 49% 35%; /* Deep Teal Blue #2D6D84 */
-    --chart-1: 7 65% 67%; /* Muted Coral #E57F6E */
-    --chart-2: 196 49% 35%; /* Deep Teal Blue #2D6D84 */
-    --chart-3: 120 19% 55%; /* Sage Green #88B48B */
-    --chart-4: 43 50% 81%; /* Warm Sand #E5D9B6 */
-    --chart-5: 215 20% 29%; /* Charcoal #3C4858 */
-    --radius: 0.5rem;
-    --sidebar-background: 196 15% 95%; /* Very Light Teal #EBF2F4 */
-    --sidebar-foreground: 215 20% 29%; /* Charcoal #3C4858 */
-    --sidebar-primary: 196 49% 35%; /* Deep Teal Blue #2D6D84 */
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 43 50% 81%; /* Warm Sand #E5D9B6 */
-    --sidebar-accent-foreground: 215 20% 29%; /* Charcoal #3C4858 */
-    --sidebar-border: 196 20% 80%; /* Light Teal #C5D8DE */
-    --sidebar-ring: 196 49% 35%; /* Deep Teal Blue #2D6D84 */
+    --popover-foreground: 240 10% 20%;
+  
+    /* Primary Colors */
+    --primary: 220 90% 60%; /* Soft Sky Blue */
+    --primary-foreground: 0 0% 100%; /* White for readability */
+  
+    /* Secondary Colors */
+    --secondary: 260 50% 85%; /* Soft Lavender */
+    --secondary-foreground: 240 20% 30%; /* Slightly Darker Blue-Gray */
+  
+    /* Muted */
+    --muted: 240 15% 90%; /* Light Grayish Blue */
+    --muted-foreground: 240 10% 40%; /* Cool Gray */
+  
+    /* Accent Colors */
+    --accent: 35 90% 65%; /* Warm Peach */
+    --accent-foreground: 0 0% 20%; /* Darker Text for contrast */
+  
+    /* Destructive */
+    --destructive: 0 70% 55%; /* Soft Red (not too aggressive) */
+  
+    /* Border & Inputs */
+    --border: 240 15% 85%; /* Subtle Cool Gray */
+    --input: 240 15% 85%;
+  
+    /* Ring */
+    --ring: 220 80% 50%; /* Light Vibrant Blue */
+  
+    /* Charts */
+    --chart-1: 40 80% 60%; /* Warm Yellow */
+    --chart-2: 190 50% 55%; /* Soft Teal */
+    --chart-3: 260 40% 55%; /* Dusty Purple */
+    --chart-4: 100 50% 60%; /* Fresh Green */
+    --chart-5: 80 45% 55%; /* Gentle Olive */
+  
+    /* Sidebar */
+    --sidebar: 0 0% 96%; /* Very Light Gray */
+    --sidebar-foreground: 240 10% 20%;
+    --sidebar-primary: 220 90% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 35 90% 65%;
+    --sidebar-accent-foreground: 0 0% 20%;
+    --sidebar-border: 240 15% 85%;
+    --sidebar-ring: 220 80% 50%;
   }
+  
+  
 
  
 }
