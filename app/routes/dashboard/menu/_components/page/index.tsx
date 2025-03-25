@@ -90,21 +90,24 @@ const MenuPage = ({ page, menus, data }: MenuPageProps) => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <Tabs defaultValue="detail">
-            <TabsList className="grid w-full md:w-1/2 grid-cols-2">
+            <TabsList
+              className="grid md:w-1/2 grid-cols-2"
+              style={{ width: '100%' }}
+            >
               <TabsTrigger value="detail">Detail</TabsTrigger>
               <TabsTrigger value="permission">Permission</TabsTrigger>
             </TabsList>
             <TabsContent value="detail" className="flex flex-col">
               <div className="flex flex-row mb-2">
-                <div className="columns-6">
+                <div className="w-1/2">
                   <FormField
                     control={form.control}
                     name="label"
                     disabled={disabled}
                     render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Label</FormLabel>
-                        <FormControl>
+                      <FormItem className="flex px-3">
+                        <FormLabel className="w-1/3 py-5">Label</FormLabel>
+                        <FormControl className="w-2/3">
                           <Input
                             {...field}
                             className={clsx({
@@ -116,15 +119,15 @@ const MenuPage = ({ page, menus, data }: MenuPageProps) => {
                     )}
                   ></FormField>
                 </div>
-                <div className="columns-6">
+                <div className="w-1/2">
                   <FormField
                     control={form.control}
                     name="path"
                     disabled={disabled}
                     render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="columns-6">Path</FormLabel>
-                        <FormControl>
+                      <FormItem className="flex px-3">
+                        <FormLabel className="w-1/3 py-5">Path</FormLabel>
+                        <FormControl className="w-2/3">
                           <Input
                             {...field}
                             className={clsx({
@@ -138,37 +141,24 @@ const MenuPage = ({ page, menus, data }: MenuPageProps) => {
                 </div>
               </div>
               <div className="flex flex-row mb-2">
-                <div className="columns-6">
+                <div className="w-1/2">
                   <FormField
                     control={form.control}
                     name="parent_id"
                     render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="columns-6">Parent</FormLabel>
-                        {/* <Select
-                            {...field}
-                            value={field.value !== undefined ? String(field.value) : ""}
-                            onValueChange={(e) => field.onChange(e ? Number(e) : undefined)}
-                            disabled={disabled}
-                            >
-                            <SelectTrigger className={clsx({ 'border-red-600': actionData?.message })}>
-                            <SelectValue placeholder="Select Parent" />
-                            </SelectTrigger>
-                            <SelectContent>
-                            {menus && menus.map((menu: Menu, i: number) => (
-                              <SelectItem key={i} value={String(menu.id)}>{menu.label}</SelectItem>
-                              ))}
-                              </SelectContent>
-                              </Select> */}
+                      <FormItem className="flex px-3">
+                        <FormLabel className="w-1/3 py-5">Parent</FormLabel>
                         <Popover>
-                          <PopoverTrigger asChild className="columns-6">
+                          <PopoverTrigger asChild>
                             <FormControl>
                               <Button
                                 variant="outline"
                                 role="combobox"
+                                disabled={disabled}
                                 className={cn(
                                   'w-[150px] justify-between',
-                                  !field.value && 'text-muted-foreground'
+                                  !field.value && 'text-muted-foreground',
+                                  'w-2/3'
                                 )}
                               >
                                 {field.value
@@ -180,7 +170,7 @@ const MenuPage = ({ page, menus, data }: MenuPageProps) => {
                               </Button>
                             </FormControl>
                           </PopoverTrigger>
-                          <PopoverContent className="w-[200px] p-0">
+                          <PopoverContent className="w-full p-0">
                             <Command>
                               <CommandInput
                                 placeholder="Search Parent..."
@@ -218,15 +208,15 @@ const MenuPage = ({ page, menus, data }: MenuPageProps) => {
                     )}
                   ></FormField>
                 </div>
-                <div className="columns-6">
+                <div className="w-1/2">
                   <FormField
                     control={form.control}
                     name="icon"
                     disabled={disabled}
                     render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="col-6">Icon</FormLabel>
-                        <FormControl>
+                      <FormItem className="flex px-3">
+                        <FormLabel className="w-1/3 py-5">Icon</FormLabel>
+                        <FormControl className="w-2/3">
                           <Input
                             {...field}
                             className={clsx({
@@ -240,14 +230,14 @@ const MenuPage = ({ page, menus, data }: MenuPageProps) => {
                 </div>
               </div>
               <div className="flex flex-row mb-2">
-                <div className="columns-6">
+                <div className="w-1/2">
                   <FormField
                     control={form.control}
                     name="is_active"
                     render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="col-md-6 row">Active</FormLabel>
-                        <FormControl>
+                      <FormItem className="flex px-3">
+                        <FormLabel className="w-1/3 py-5">Active</FormLabel>
+                        <FormControl style={{ marginTop: 20 }}>
                           <Checkbox
                             checked={field.value}
                             onCheckedChange={field.onChange}
@@ -271,9 +261,11 @@ const MenuPage = ({ page, menus, data }: MenuPageProps) => {
           )}
 
           {page !== 'detail' && (
-            <Button type="submit">
-              {isPending ? <Loader2 className="animate-spin" /> : 'Submit'}
-            </Button>
+            <div className="flex justify-end">
+              <Button type="submit" disabled={isPending}>
+                {isPending ? <Loader2 className="animate-spin" /> : 'Submit'}
+              </Button>
+            </div>
           )}
         </form>
       </Form>
