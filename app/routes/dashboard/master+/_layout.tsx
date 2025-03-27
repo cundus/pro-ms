@@ -1,5 +1,5 @@
 import { MetaFunction } from '@remix-run/node'
-import { Navigate, Outlet, useOutletContext } from '@remix-run/react'
+import { Outlet, useOutletContext } from '@remix-run/react'
 
 import Container from '~/components/Container'
 import type { IOutletContext } from '~/types/outlet-context'
@@ -14,10 +14,10 @@ export const meta: MetaFunction = () => {
 
 const MasterLayout = () => {
   const outletContext = useOutletContext<IOutletContext>()
-
-  if (!outletContext?.userSession) {
-    return <Navigate to="/logout" />
-  }
+  console.log('from master layout', outletContext)
+  // if (!outletContext?.userSession) {
+  //   return <Navigate to="/logout" />
+  // }
 
   return (
     <Container>
