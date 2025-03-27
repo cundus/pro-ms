@@ -1,5 +1,5 @@
 import { User } from '@prisma/client'
-import { redirect } from '@remix-run/node'
+import { redirect } from '@vercel/remix'
 import bcrypt from 'bcryptjs'
 
 import { getMenuAndPermissions } from '../repositories/menu.server'

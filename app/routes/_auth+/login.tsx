@@ -5,13 +5,13 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Icon } from '@iconify-icon/react/dist/iconify.mjs'
+import { useActionData, useNavigation, useSubmit } from '@remix-run/react'
 import {
   ActionFunctionArgs,
   LoaderFunction,
   MetaFunction,
   redirect,
-} from '@remix-run/node'
-import { useActionData, useNavigation, useSubmit } from '@remix-run/react'
+} from '@vercel/remix'
 import clsx from 'clsx'
 import { Loader2 } from 'lucide-react'
 import { z } from 'zod'

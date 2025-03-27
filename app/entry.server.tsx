@@ -5,9 +5,9 @@
  */
 
 import { renderToPipeableStream } from 'react-dom/server'
-import type { AppLoadContext, EntryContext } from '@remix-run/node'
 import { createReadableStreamFromReadable } from '@remix-run/node'
 import { RemixServer } from '@remix-run/react'
+import type { AppLoadContext, EntryContext } from '@vercel/remix'
 import { isbot } from 'isbot'
 import { PassThrough } from 'node:stream'
 

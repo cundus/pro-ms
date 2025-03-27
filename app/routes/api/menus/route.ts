@@ -1,4 +1,4 @@
-import { LoaderFunction } from '@remix-run/node'
+import { LoaderFunction } from '@vercel/remix'
 
 import { IMenu } from '~/types/menu'
 import { guard } from '~/utils/guard.server'

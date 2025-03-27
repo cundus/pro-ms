@@ -1,4 +1,4 @@
-import { redirect } from '@remix-run/node'
+import { redirect } from '@vercel/remix'
 
 // import { getUserDetails } from '~/repositories/user.server'
 import { getUserSession, logout } from '~/sessions/session.server'

@@ -1,9 +1,5 @@
-import {
-  ActionFunctionArgs,
-  LoaderFunction,
-  MetaFunction,
-} from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
+import { ActionFunctionArgs, LoaderFunction, MetaFunction } from '@vercel/remix'
 
 import MenuPage from '../_components/page'
 

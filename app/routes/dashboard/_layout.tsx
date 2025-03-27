@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { LoaderFunction } from '@remix-run/node'
 import { Outlet, useLoaderData } from '@remix-run/react'
+import { LoaderFunction } from '@vercel/remix'
 
 import Navbar from '~/components/Navbar'
 import Sidebar from '~/components/Sidebar'

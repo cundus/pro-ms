@@ -1,5 +1,5 @@
-import type { MetaFunction } from '@remix-run/node'
 import { Link } from '@remix-run/react'
+import type { MetaFunction } from '@vercel/remix'
 
 import { Button } from '~/components/ui/button'
 

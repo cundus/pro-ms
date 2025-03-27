@@ -1,6 +1,6 @@
 import { Menu } from '@prisma/client'
-import { LoaderFunction } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
+import { LoaderFunction } from '@vercel/remix'
 
 import { columns } from '~/components/data-table/columns'
 import CommonTable from '~/components/data-table/tables'

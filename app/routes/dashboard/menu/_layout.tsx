@@ -1,5 +1,5 @@
-import { MetaFunction } from '@remix-run/node'
 import { Navigate, Outlet, useOutletContext } from '@remix-run/react'
+import { MetaFunction } from '@vercel/remix'
 
 import Container from '~/components/Container'
 import type { IOutletContext } from '~/types/outlet-context'

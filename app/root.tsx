@@ -1,4 +1,3 @@
-import type { LinksFunction } from '@remix-run/node'
 import {
   Links,
   Meta,
@@ -6,6 +5,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from '@remix-run/react'
+import type { LinksFunction } from '@vercel/remix'
 
 import { GeneralErrorBoundary } from './components/error-boundary'
 import { Toaster } from './components/ui/toaster'

@@ -1,5 +1,5 @@
-import { LoaderFunction } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
+import { LoaderFunction } from '@vercel/remix'
 
 import { columns } from '~/components/data-table/columns/company-columns'
 import CompanyDataTable from '~/components/data-table/tables/company-table'

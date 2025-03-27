@@ -1,5 +1,5 @@
-import { LoaderFunction } from '@remix-run/node'
 import { useLoaderData, useOutletContext } from '@remix-run/react'
+import { LoaderFunction } from '@vercel/remix'
 
 import NewForm from '../_components/new-form'
 

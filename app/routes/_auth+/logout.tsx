@@ -1,4 +1,4 @@
-import { ActionFunction, LoaderFunction } from '@remix-run/node'
+import { ActionFunction, LoaderFunction } from '@vercel/remix'
 
 import { logout } from '~/sessions/session.server'
 

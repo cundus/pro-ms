@@ -1,4 +1,4 @@
-import { LoaderFunction, redirect } from '@remix-run/node'
+import { LoaderFunction, redirect } from '@vercel/remix'
 
 import { deleteMenuService } from '~/services/menu.server'
 import { guard } from '~/utils/guard.server'
