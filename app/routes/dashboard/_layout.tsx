@@ -15,7 +15,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 const DashboardLayout = () => {
   const loaderData = useLoaderData<typeof loader>()
-
+  console.log('loaderData from dashboard_layout', loaderData)
   return (
     <SidebarProvider>
       <div className="flex w-full">
