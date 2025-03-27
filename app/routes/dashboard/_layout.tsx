@@ -8,9 +8,7 @@ import { SidebarProvider } from '~/components/ui/sidebar'
 import { guard } from '~/utils/guard.server'
 
 export const loader: LoaderFunction = async ({ request }) => {
-  console.log('Guard from _layout dashboard')
   const user = await guard(request)
-  console.log('Guard from _layout dashboard')
 
   return Response.json({ user: user.user })
 }

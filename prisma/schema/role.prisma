@@ -13,6 +13,7 @@ model Role {
     // Relationships
     users       User[]
     permissions RolePermission[]
+    company     Company?         @relation(fields: [company_id], references: [id])
 
     @@map("roles")
 }

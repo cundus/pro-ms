@@ -5,7 +5,7 @@ import { Menu } from '@prisma/client'
 import { ActionFunctionArgs } from '@remix-run/node'
 import { useActionData, useNavigation, useSubmit } from '@remix-run/react'
 import clsx from 'clsx'
-import { Check, ChevronsUpDown, Loader2 } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 import { z } from 'zod'
 
 import { NewMenuSchema } from '../schema'
@@ -13,14 +13,6 @@ import { NewMenuSchema } from '../schema'
 import { GeneralErrorBoundary } from '~/components/error-boundary'
 import { Button } from '~/components/ui/button'
 import { Checkbox } from '~/components/ui/checkbox'
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from '~/components/ui/command'
 import {
   Form,
   FormControl,
@@ -30,13 +22,13 @@ import {
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '~/components/ui/popover'
-// import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select"
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '~/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs'
-import { cn } from '~/lib/utils'
 import { editMenuService, newMenuService } from '~/services/menu.server'
 
 type MenuPageProps = {
@@ -95,8 +87,8 @@ const MenuPage = ({ page, menus, data }: MenuPageProps) => {
               <TabsTrigger value="permission">Permission</TabsTrigger>
             </TabsList>
             <TabsContent value="detail" className="flex flex-col">
-              <div className="flex flex-row mb-2">
-                <div className="columns-6">
+              <div className="flex flex-row mb-2 gap-2">
+                <div className="w-1/2">
                   <FormField
                     control={form.control}
                     name="label"
@@ -116,14 +108,14 @@ const MenuPage = ({ page, menus, data }: MenuPageProps) => {
                     )}
                   ></FormField>
                 </div>
-                <div className="columns-6">
+                <div className="w-1/2">
                   <FormField
                     control={form.control}
                     name="path"
                     disabled={disabled}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="columns-6">Path</FormLabel>
+                        <FormLabel className="">Path</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
@@ -137,88 +129,101 @@ const MenuPage = ({ page, menus, data }: MenuPageProps) => {
                   ></FormField>
                 </div>
               </div>
-              <div className="flex flex-row mb-2">
-                <div className="columns-6">
+              <div className="flex flex-row mb-2 gap-2">
+                <div className="w-1/2">
                   <FormField
                     control={form.control}
                     name="parent_id"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="columns-6">Parent</FormLabel>
-                        {/* <Select
-                            {...field}
-                            value={field.value !== undefined ? String(field.value) : ""}
-                            onValueChange={(e) => field.onChange(e ? Number(e) : undefined)}
-                            disabled={disabled}
-                            >
-                            <SelectTrigger className={clsx({ 'border-red-600': actionData?.message })}>
+                        <FormLabel className="">Parent</FormLabel>
+                        <Select
+                          {...field}
+                          value={
+                            field.value !== undefined ? String(field.value) : ''
+                          }
+                          onValueChange={(e) =>
+                            field.onChange(e ? Number(e) : undefined)
+                          }
+                          disabled={disabled}
+                        >
+                          <SelectTrigger
+                            className={clsx({
+                              'border-red-600': actionData?.message,
+                            })}
+                          >
                             <SelectValue placeholder="Select Parent" />
-                            </SelectTrigger>
-                            <SelectContent>
-                            {menus && menus.map((menu: Menu, i: number) => (
-                              <SelectItem key={i} value={String(menu.id)}>{menu.label}</SelectItem>
+                          </SelectTrigger>
+                          <SelectContent>
+                            {menus &&
+                              menus.map((menu: Menu, i: number) => (
+                                <SelectItem key={i} value={String(menu.id)}>
+                                  {menu.label}
+                                </SelectItem>
                               ))}
-                              </SelectContent>
-                              </Select> */}
-                        <Popover>
-                          <PopoverTrigger asChild className="columns-6">
-                            <FormControl>
-                              <Button
-                                variant="outline"
-                                role="combobox"
-                                className={cn(
-                                  'w-[150px] justify-between',
-                                  !field.value && 'text-muted-foreground'
-                                )}
-                              >
-                                {field.value
-                                  ? menus!.find(
-                                      (menu) => menu.id === field.value
-                                    )?.label
-                                  : 'Select Parent...'}
-                                <ChevronsUpDown className="opacity-50" />
-                              </Button>
-                            </FormControl>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-[200px] p-0">
-                            <Command>
-                              <CommandInput
-                                placeholder="Search Parent..."
-                                className="h-9"
-                              />
-                              <CommandList>
-                                <CommandEmpty>No Parent found.</CommandEmpty>
-                                <CommandGroup>
-                                  {menus &&
-                                    menus.map((menu) => (
-                                      <CommandItem
-                                        key={menu.id}
-                                        value={menu.label}
-                                        onSelect={() => {
-                                          form.setValue('parent_id', menu.id)
-                                        }}
-                                      >
-                                        {menu.label}
-                                        <Check
-                                          className={cn(
-                                            'ml-auto',
-                                            field.value === menu.id
-                                              ? 'opacity-100'
-                                              : 'opacity-0'
-                                          )}
-                                        />
-                                      </CommandItem>
-                                    ))}
-                                </CommandGroup>
-                              </CommandList>
-                            </Command>
-                          </PopoverContent>
-                        </Popover>
+                          </SelectContent>
+                        </Select>
+                        {/* <FormControl>
+                          <Popover>
+                            <PopoverTrigger asChild className="">
+                              <FormControl>
+                                <Button
+                                  variant="outline"
+                                  role="combobox"
+                                  className={cn(
+                                    'w-[150px] justify-between',
+                                    !field.value && 'text-muted-foreground'
+                                  )}
+                                >
+                                  {field.value
+                                    ? menus!.find(
+                                        (menu) => menu.id === field.value
+                                      )?.label
+                                    : 'Select Parent...'}
+                                  <ChevronsUpDown className="opacity-50" />
+                                </Button>
+                              </FormControl>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-[200px] p-0">
+                              <Command>
+                                <CommandInput
+                                  placeholder="Search Parent..."
+                                  className="h-9"
+                                />
+                                <CommandList>
+                                  <CommandEmpty>No Parent found.</CommandEmpty>
+                                  <CommandGroup>
+                                    {menus &&
+                                      menus.map((menu) => (
+                                        <CommandItem
+                                          key={menu.id}
+                                          value={menu.label}
+                                          onSelect={() => {
+                                            form.setValue('parent_id', menu.id)
+                                          }}
+                                        >
+                                          {menu.label}
+                                          <Check
+                                            className={cn(
+                                              'ml-auto',
+                                              field.value === menu.id
+                                                ? 'opacity-100'
+                                                : 'opacity-0'
+                                            )}
+                                          />
+                                        </CommandItem>
+                                      ))}
+                                  </CommandGroup>
+                                </CommandList>
+                              </Command>
+                            </PopoverContent>
+                          </Popover>
+                        </FormControl> */}
                       </FormItem>
                     )}
                   ></FormField>
                 </div>
-                <div className="columns-6">
+                <div className="w-1/2">
                   <FormField
                     control={form.control}
                     name="icon"
@@ -240,23 +245,21 @@ const MenuPage = ({ page, menus, data }: MenuPageProps) => {
                 </div>
               </div>
               <div className="flex flex-row mb-2">
-                <div className="columns-6">
+                <div className="">
                   <FormField
                     control={form.control}
                     name="is_active"
                     render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="col-md-6 row">Active</FormLabel>
-                        <FormControl>
-                          <Checkbox
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                            className={clsx({
-                              'border-red-600': actionData?.message,
-                            })}
-                            disabled={disabled}
-                          />
-                        </FormControl>
+                      <FormItem className="flex items-end space-x-2">
+                        <FormLabel className="">Active</FormLabel>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          className={clsx({
+                            'border-red-600': actionData?.message,
+                          })}
+                          disabled={disabled}
+                        />
                       </FormItem>
                     )}
                   ></FormField>

@@ -86,7 +86,7 @@ function Login() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit, (data) => console.log(data))}
-          className="space-y-6 bg-white p-6 rounded-lg w-1/3"
+          className="space-y-6  p-6 rounded-lg w-1/3"
         >
           <FormField
             control={form.control}
