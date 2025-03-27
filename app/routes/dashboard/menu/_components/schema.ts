@@ -1,11 +1,14 @@
 import { z, ZodType } from 'zod'
 
 export const menuSchema: ZodType = z.object({
-  label: z.string().nonempty('Label is required'),
-  path: z.string().nonempty('Path is required'),
+  label: z
+    .string()
+    .min(2, { message: 'Label must be at least 2 characters.' })
+    .nonempty('Label is required'),
+  path: z.string().optional(),
   icon: z.string().optional(),
   parent_id: z.number().optional(),
-  is_active: z.boolean().optional(),
+  is_active: z.boolean().optional().default(true),
   permissions: z
     .array(
       z.object({

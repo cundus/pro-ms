@@ -90,10 +90,7 @@ const MenuPage = ({ page, menus, data }: MenuPageProps) => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <Tabs defaultValue="detail">
-            <TabsList
-              className="grid md:w-1/2 grid-cols-2"
-              style={{ width: '100%' }}
-            >
+            <TabsList className="grid grid-cols-2 w-full">
               <TabsTrigger value="detail">Detail</TabsTrigger>
               <TabsTrigger value="permission">Permission</TabsTrigger>
             </TabsList>
