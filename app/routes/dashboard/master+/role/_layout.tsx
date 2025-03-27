@@ -19,12 +19,9 @@ const RoleLayout = () => {
     return <Navigate to="/logout" />
   }
 
-  if (!outletContext?.userSession.role?.is_global) {
-    return <Navigate to="/dashboard" />
-  }
   return (
     <Container>
-      <Outlet />
+      <Outlet context={{ userSession: outletContext.userSession }} />
     </Container>
   )
 }

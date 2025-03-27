@@ -2,15 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  /* @apply bg-white dark:bg-black; */
-
-  /* @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  } */
-}
-
 * {
   font-family: 'Inter', sans-serif;
 }
@@ -18,66 +9,62 @@ body {
 @layer base {
   :root {
     --radius: 0.625rem;
-  
+
     /* Background & Foreground */
     --background: 0 0% 98%; /* Soft White */
     --foreground: 240 10% 20%; /* Dark Grayish Blue for good contrast */
-  
+
     /* Card */
     --card: 0 0% 100%; /* Pure White */
     --card-foreground: 240 10% 20%;
-  
+
     /* Popover */
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 20%;
-  
+
     /* Primary Colors */
     --primary: 220 90% 60%; /* Soft Sky Blue */
     --primary-foreground: 0 0% 100%; /* White for readability */
-  
+
     /* Secondary Colors */
     --secondary: 260 50% 85%; /* Soft Lavender */
     --secondary-foreground: 240 20% 30%; /* Slightly Darker Blue-Gray */
-  
+
     /* Muted */
     --muted: 240 15% 90%; /* Light Grayish Blue */
     --muted-foreground: 240 10% 40%; /* Cool Gray */
-  
+
     /* Accent Colors */
-    --accent: 35 90% 65%; /* Warm Peach */
-    --accent-foreground: 0 0% 20%; /* Darker Text for contrast */
-  
+    --accent: 220 90% 60%; /* Vibrant Teal (adds freshness) */
+    --accent-foreground: 0 0% 100%; /* White for contrast */
+
     /* Destructive */
     --destructive: 0 70% 55%; /* Soft Red (not too aggressive) */
-  
+
     /* Border & Inputs */
     --border: 240 15% 85%; /* Subtle Cool Gray */
     --input: 240 15% 85%;
-  
+
     /* Ring */
     --ring: 220 80% 50%; /* Light Vibrant Blue */
-  
+
     /* Charts */
     --chart-1: 40 80% 60%; /* Warm Yellow */
     --chart-2: 190 50% 55%; /* Soft Teal */
     --chart-3: 260 40% 55%; /* Dusty Purple */
     --chart-4: 100 50% 60%; /* Fresh Green */
     --chart-5: 80 45% 55%; /* Gentle Olive */
-  
+
     /* Sidebar */
     --sidebar: 0 0% 96%; /* Very Light Gray */
     --sidebar-foreground: 240 10% 20%;
     --sidebar-primary: 220 90% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 35 90% 65%;
-    --sidebar-accent-foreground: 0 0% 20%;
+    --sidebar-accent: 220 90% 60%;
+    --sidebar-accent-foreground: 0 0% 100%;
     --sidebar-border: 240 15% 85%;
     --sidebar-ring: 220 80% 50%;
   }
-  
-  
-
- 
 }
 
 @layer base {

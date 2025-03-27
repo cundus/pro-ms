@@ -7,7 +7,7 @@ model Menu {
   order     Int     @default(autoincrement())
   is_active Boolean @default(true)
 
-  parent   Menu?  @relation("MultiMenu", references: [id], fields: [parent_id])
+  parent   Menu?  @relation("MultiMenu", references: [id], fields: [parent_id], onDelete: Cascade, onUpdate: Cascade)
   children Menu[] @relation("MultiMenu")
 
   permissions RolePermission[]
