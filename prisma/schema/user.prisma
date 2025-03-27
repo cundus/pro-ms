@@ -12,8 +12,8 @@ model User {
     company_id Int?
 
     // Relationships
-    role    Role     @relation(fields: [role_id], references: [id])
-    company Company? @relation(fields: [company_id], references: [id])
+    role    Role     @relation(fields: [role_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    company Company? @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
     profile Profile?
 
     @@map("users")
@@ -24,7 +24,7 @@ model Profile {
     id      Int @id @default(autoincrement())
     user_id Int @unique
 
-    user User @relation(references: [id], fields: [user_id])
+    user User @relation(references: [id], fields: [user_id], onDelete: Cascade, onUpdate: Cascade)
 
     @@map("profiles")
 }

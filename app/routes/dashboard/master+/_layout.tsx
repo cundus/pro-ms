@@ -19,9 +19,6 @@ const MasterLayout = () => {
     return <Navigate to="/logout" />
   }
 
-  if (!outletContext?.userSession.role?.is_global) {
-    return <Navigate to="/dashboard" />
-  }
   return (
     <Container>
       <Outlet />
