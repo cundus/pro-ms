@@ -52,7 +52,29 @@ type OrderParams = {
 }
 
 export const getAllMenus = async (orderBy: OrderParams = { id: 'desc' }) => {
-  return await prisma.menu.findMany({ orderBy })
+  return await prisma.menu.findMany({
+    orderBy,
+    select: {
+      id: true,
+      label: true,
+      path: true,
+      parent_id: true,
+      icon: true,
+      is_active: true,
+      order: true,
+      permissions: {
+        select: {
+          role_id: true,
+          role: true,
+          menu_id: true,
+          create: true,
+          read: true,
+          update: true,
+          delete: true,
+        },
+      },
+    },
+  })
 }
 
 export const countMenuById = async (id: number) => {
@@ -60,7 +82,29 @@ export const countMenuById = async (id: number) => {
 }
 
 export const getMenuById = async (id: number) => {
-  return await prisma.menu.findUnique({ where: { id } })
+  return await prisma.menu.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      label: true,
+      path: true,
+      parent_id: true,
+      icon: true,
+      is_active: true,
+      order: true,
+      permissions: {
+        select: {
+          role_id: true,
+          role: true,
+          menu_id: true,
+          create: true,
+          read: true,
+          update: true,
+          delete: true,
+        },
+      },
+    },
+  })
 }
 
 export const createMenu = async (body: MenuBody) => {

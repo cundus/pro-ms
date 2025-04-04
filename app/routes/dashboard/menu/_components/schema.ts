@@ -37,4 +37,14 @@ export const NewMenuSchema = z.object({
   order: z.number().optional(),
   is_active: z.boolean().optional().default(true),
   mode: z.string().optional(),
+  permissions: z.string().optional(),
+})
+
+export const permissionSchema: ZodType = z.object({
+  role_id: z.number(),
+  menu_id: z.number().optional(),
+  create: z.boolean().default(false),
+  read: z.boolean().default(false),
+  update: z.boolean().default(false),
+  delete: z.boolean().default(false),
 })
