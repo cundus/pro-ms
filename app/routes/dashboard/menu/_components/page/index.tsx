@@ -1,7 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Menu } from '@prisma/client'
+import { Role } from '@prisma/client'
 import { ActionFunctionArgs } from '@remix-run/node'
 import { useActionData, useNavigation, useSubmit } from '@remix-run/react'
 import clsx from 'clsx'
@@ -9,7 +9,9 @@ import { Check, ChevronsUpDown, Loader2 } from 'lucide-react'
 import { z } from 'zod'
 
 import { NewMenuSchema } from '../schema'
+import PermissionTable from '../table'
 
+import { customColumns } from '~/components/data-table/columns'
 import { GeneralErrorBoundary } from '~/components/error-boundary'
 import { Button } from '~/components/ui/button'
 import { Checkbox } from '~/components/ui/checkbox'
@@ -34,15 +36,19 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '~/components/ui/popover'
-// import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs'
 import { cn } from '~/lib/utils'
 import { editMenuService, newMenuService } from '~/services/menu.server'
+import usePermissionStore from '~/store/permission'
+import { Columns } from '~/types/columns'
+import { Menu } from '~/types/menu'
+import { Permission } from '~/types/permission'
 
 type MenuPageProps = {
   page: 'new' | 'edit' | 'detail'
   menus?: Menu[]
   data?: Menu
+  roles: Role[]
 }
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -56,8 +62,41 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 }
 
-const MenuPage = ({ page, menus, data }: MenuPageProps) => {
+const columns: Columns[] = [
+  {
+    key: 'role_id',
+    title: 'Role ID',
+  },
+  {
+    key: 'role.name',
+    title: 'Name',
+  },
+  {
+    key: 'create',
+    title: 'Create',
+  },
+  {
+    key: 'read',
+    title: 'Read',
+  },
+  {
+    key: 'update',
+    title: 'Update',
+  },
+  {
+    key: 'delete',
+    title: 'Delete',
+  },
+  {
+    key: 'role_id',
+    title: 'Action',
+  },
+]
+
+const MenuPage = ({ page, menus, data, roles }: MenuPageProps) => {
+  const { permissions, setPermissions, setData } = usePermissionStore()
   const [mode] = React.useState<MenuPageProps['page']>(page)
+  const [open, setOpen] = React.useState(false)
   const disabled = page === 'detail'
 
   const submit = useSubmit()
@@ -79,10 +118,27 @@ const MenuPage = ({ page, menus, data }: MenuPageProps) => {
   function onSubmit(body: z.infer<typeof NewMenuSchema>) {
     body.mode = mode
     if (mode === 'edit') body.id = data?.id
+    delete body.mode
+
+    body.permissions = JSON.stringify(permissions)
+
     return submit(body, {
       method: 'post',
     })
   }
+
+  function setRemove(id: number) {
+    const idx = permissions.findIndex((p) => p.role_id === id)
+    if (idx !== -1) {
+      const newPermissions = [...permissions]
+      newPermissions.splice(idx, 1)
+      setPermissions(newPermissions)
+    }
+  }
+
+  React.useEffect(() => {
+    setPermissions(data?.permissions || [])
+  }, [])
 
   return (
     <>
@@ -94,17 +150,17 @@ const MenuPage = ({ page, menus, data }: MenuPageProps) => {
               <TabsTrigger value="detail">Detail</TabsTrigger>
               <TabsTrigger value="permission">Permission</TabsTrigger>
             </TabsList>
-            <TabsContent value="detail" className="flex flex-col">
-              <div className="flex flex-row mb-2">
-                <div className="w-1/2">
+            <TabsContent value="detail" className="pt-2">
+              <div className="grid grid-cols-2 mb-2">
+                <div>
                   <FormField
                     control={form.control}
                     name="label"
                     disabled={disabled}
                     render={({ field }) => (
-                      <FormItem className="flex px-3">
-                        <FormLabel className="w-1/3 py-5">Label</FormLabel>
-                        <FormControl className="w-2/3">
+                      <FormItem className="grid grid-cols-3 px-3">
+                        <FormLabel className="py-5">Label</FormLabel>
+                        <FormControl className="col-span-2">
                           <Input
                             {...field}
                             className={clsx({
@@ -114,17 +170,17 @@ const MenuPage = ({ page, menus, data }: MenuPageProps) => {
                         </FormControl>
                       </FormItem>
                     )}
-                  ></FormField>
+                  />
                 </div>
-                <div className="w-1/2">
+                <div>
                   <FormField
                     control={form.control}
                     name="path"
                     disabled={disabled}
                     render={({ field }) => (
-                      <FormItem className="flex px-3">
-                        <FormLabel className="w-1/3 py-5">Path</FormLabel>
-                        <FormControl className="w-2/3">
+                      <FormItem className="grid grid-cols-3 px-3">
+                        <FormLabel className="py-5">Path</FormLabel>
+                        <FormControl className="col-span-2">
                           <Input
                             {...field}
                             className={clsx({
@@ -134,11 +190,11 @@ const MenuPage = ({ page, menus, data }: MenuPageProps) => {
                         </FormControl>
                       </FormItem>
                     )}
-                  ></FormField>
+                  />
                 </div>
               </div>
-              <div className="flex flex-row mb-2">
-                <div className="w-1/2">
+              <div className="grid grid-cols-2 mb-2">
+                <div>
                   <FormField
                     control={form.control}
                     name="parent_id"
@@ -203,17 +259,17 @@ const MenuPage = ({ page, menus, data }: MenuPageProps) => {
                         </Popover>
                       </FormItem>
                     )}
-                  ></FormField>
+                  />
                 </div>
-                <div className="w-1/2">
+                <div>
                   <FormField
                     control={form.control}
                     name="icon"
                     disabled={disabled}
                     render={({ field }) => (
-                      <FormItem className="flex px-3">
-                        <FormLabel className="w-1/3 py-5">Icon</FormLabel>
-                        <FormControl className="w-2/3">
+                      <FormItem className="grid grid-cols-3 px-3">
+                        <FormLabel className="py-5">Icon</FormLabel>
+                        <FormControl className="col-span-2">
                           <Input
                             {...field}
                             className={clsx({
@@ -223,17 +279,17 @@ const MenuPage = ({ page, menus, data }: MenuPageProps) => {
                         </FormControl>
                       </FormItem>
                     )}
-                  ></FormField>
+                  />
                 </div>
               </div>
-              <div className="flex flex-row mb-2">
-                <div className="w-1/2">
+              <div className="grid grid-cols-2 mb-2">
+                <div>
                   <FormField
                     control={form.control}
                     name="is_active"
                     render={({ field }) => (
-                      <FormItem className="flex px-3">
-                        <FormLabel className="w-1/3 py-5">Active</FormLabel>
+                      <FormItem className="grid grid-cols-3 px-3">
+                        <FormLabel className="py-5">Active</FormLabel>
                         <FormControl style={{ marginTop: 20 }}>
                           <Checkbox
                             checked={field.value}
@@ -246,11 +302,32 @@ const MenuPage = ({ page, menus, data }: MenuPageProps) => {
                         </FormControl>
                       </FormItem>
                     )}
-                  ></FormField>
+                  />
                 </div>
               </div>
             </TabsContent>
-            <TabsContent value="permission">Permission</TabsContent>
+            <TabsContent value="permission" className="p-2">
+              <div className="mb-5">
+                <div className="w-full">
+                  <PermissionTable
+                    columns={customColumns<Permission>(
+                      columns,
+                      setOpen,
+                      setRemove,
+                      setData as unknown as (
+                        data: Record<
+                          string,
+                          React.ReactNode | { [key: string]: React.ReactNode }
+                        >
+                      ) => void
+                    )}
+                    roles={roles}
+                    open={open}
+                    setOpen={setOpen}
+                  />
+                </div>
+              </div>
+            </TabsContent>
           </Tabs>
 
           {actionData?.message && (

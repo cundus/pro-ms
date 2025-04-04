@@ -21,3 +21,14 @@ export type MenuBody = {
   order?: number
   is_active?: boolean
 }
+
+export type Menu = {
+  id?: number
+  label: string
+  icon?: string
+  path?: string
+  parent_id?: number
+  order?: number
+  is_active?: boolean
+  permissions?: Permission[]
+}

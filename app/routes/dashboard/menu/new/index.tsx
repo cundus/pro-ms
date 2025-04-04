@@ -10,6 +10,7 @@ import MenuPage from '../_components/page'
 import Back from '~/components/data-table/components/back-button'
 import Heading from '~/components/heading'
 import { getAllMenus } from '~/repositories/menu.server'
+import { getAllRoles } from '~/repositories/role.server'
 import { newMenuService } from '~/services/menu.server'
 import { guard } from '~/utils/guard.server'
 
@@ -27,12 +28,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   await guard(request)
+
   const menus = await getAllMenus({ label: 'asc' })
-  return Response.json({ menus })
+  const roles = await getAllRoles()
+
+  return Response.json({ menus, roles })
 }
 
 const Index = () => {
-  const { menus } = useLoaderData<typeof loader>()
+  const { menus, roles } = useLoaderData<typeof loader>()
 
   return (
     <>
@@ -40,7 +44,7 @@ const Index = () => {
         <Heading title="New Menu" />
         <Back />
       </div>
-      <MenuPage page="new" menus={menus} />
+      <MenuPage page="new" menus={menus} roles={roles} />
     </>
   )
 }
